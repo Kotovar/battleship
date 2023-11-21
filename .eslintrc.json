@@ -8,5 +8,5 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"rules": { "prefer-template": "error" }
+	"rules": {"prefer-template": "error", "capitalized-comments": "off"}
 }

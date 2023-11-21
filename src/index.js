@@ -1,5 +1,4 @@
 import '../dist/css/style.css';
+import {Ship} from './ship';
 
-export function add(a, b) {
-	return a + b;
-}
+// const ship1 = new Ship(4);
