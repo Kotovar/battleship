@@ -1,4 +1,5 @@
 {
+	"plugins": [],
 	"env": {
 		"browser": true,
 		"es2021": true
@@ -8,5 +9,8 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"rules": {"prefer-template": "error", "capitalized-comments": "off"}
+	"rules": {
+		"prefer-template": "error",
+		"capitalized-comments": "off"
+	}
 }
