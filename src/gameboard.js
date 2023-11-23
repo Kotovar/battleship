@@ -1,6 +1,7 @@
 import {Ship} from './ship';
 
-const SHIP = 'S';
+const SHIP_CELL = 'S';
+const EMPTY_CELL = 'O';
 // const HIT = 'X';
 
 export class Gameboard {
@@ -8,24 +9,19 @@ export class Gameboard {
 		this.player = player;
 	}
 
-	countShips = 0;
-
-	ships = [];
-	// ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1].map(length => new Ship(length));
-
 	listOfShips = new Map();
 
 	map = [
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
-		['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
 	];
 
 	getlistOfShips() {
@@ -33,47 +29,74 @@ export class Gameboard {
 	}
 
 	placeShip(shipLength, xCell, yCell, dir) {
-		if (this.checkConditions(shipLength, xCell, yCell, dir)) {
-			return 'Некорректный ввод';
-		}
-
-		if (this.countShips > 0 && this.searchShip(`${xCell}${yCell}`)) {
-			return 'Пересечение с другим кораблём';
+		if (!this.#checkConditions(shipLength, xCell, yCell, dir)) {
+			return `Измените ввод ${shipLength} ${xCell} ${yCell} ${dir}`;
 		}
 
 		const ship = new Ship(shipLength);
 		const shipPosition = [];
 		if (dir === 'x') {
 			for (let i = 0; i < ship.length; i++) {
-				this.map[xCell][yCell + i] = SHIP;
+				this.map[xCell][yCell + i] = SHIP_CELL;
 				shipPosition.push(`${xCell}${yCell + i}`);
 			}
 		} else if (dir === 'y') {
 			for (let i = 0; i < ship.length; i++) {
-				this.map[xCell + i][yCell] = SHIP;
+				this.map[xCell + i][yCell] = SHIP_CELL;
 				shipPosition.push(`${xCell + i}${yCell}`);
 			}
 		}
 
+		this.#fillAdjacentCells(shipLength, xCell, yCell, dir);
+
 		this.listOfShips.set(ship, shipPosition);
-		this.countShips++;
 	}
 
-	checkConditions(length, x, y, dir) {
-		if (dir === 'x' && length + y < this.map.length && x < this.map.length) {
+	receiveAttack(coordinate) {}
+
+	#fillAdjacentCells(size, xCell, yCell, direction) {
+		let xStart = xCell - 1;
+		let xEnd = direction === 'x' ? xCell + 1 : xCell + size;
+		let yStart = yCell - 1;
+		let yEnd = direction === 'y' ? yCell + 1 : yCell + size;
+
+		for (let x = xStart; x <= xEnd; x++) {
+			for (let y = yStart; y <= yEnd; y++) {
+				if (x >= 0 && x < this.map.length && y >= 0 && y < this.map.length) {
+					this.map[x][y] =
+						this.map[x][y] === SHIP_CELL ? SHIP_CELL : EMPTY_CELL;
+				}
+			}
+		}
+	}
+
+	#checkConditions(shipLength, xCell, yCell, dir) {
+		if (this.#isCorrectCoordinate(shipLength, xCell, yCell, dir)) {
+			console.log('Некорректный ввод');
 			return false;
 		}
 
-		if (dir === 'y' && y < this.map.length && length + x < this.map.length) {
+		if (this.listOfShips.size && this.#isShipCrossing(`${xCell}${yCell}`)) {
+			console.log('Пересечение с другим кораблём');
+			return false;
+		}
+
+		if (this.listOfShips.size && this.#isAdjacentCrossing(xCell, yCell)) {
+			console.log('Близкое расположение к другому кораблю');
 			return false;
 		}
 
 		return true;
 	}
 
-	searchShip(cell) {
-		return [...this.listOfShips].some(([, position]) =>
-			position.includes(cell),
-		);
+	#isCorrectCoordinate(length, x, y, dir) {
+		return !(dir === 'x'
+			? length + y <= this.map.length && x < this.map.length
+			: y < this.map.length && length + x <= this.map.length);
 	}
+
+	#isShipCrossing = (cell) =>
+		[...this.listOfShips].some(([, position]) => position.includes(cell));
+
+	#isAdjacentCrossing = (x, y) => (this.map[x][y] === 'O' ? true : false);
 }
