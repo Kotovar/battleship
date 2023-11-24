@@ -10,4 +10,7 @@ board.placeShip(3, 3, 1, 'x');
 board.placeShip(3, 0, 0, 'x');
 board.placeShip(3, 0, 2, 'y');
 console.log(board.map);
+
+board.receiveAttack('55');
+board.receiveAttack('14');
 console.log(board.getlistOfShips());

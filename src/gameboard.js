@@ -2,7 +2,8 @@ import {Ship} from './ship';
 
 const SHIP_CELL = 'S';
 const EMPTY_CELL = 'O';
-// const HIT = 'X';
+const HIT = 'X';
+const MISS = 'M';
 
 export class Gameboard {
 	constructor(player) {
@@ -10,6 +11,8 @@ export class Gameboard {
 	}
 
 	listOfShips = new Map();
+
+	allMapVisible = true;
 
 	map = [
 		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
@@ -27,6 +30,10 @@ export class Gameboard {
 	getlistOfShips() {
 		return this.listOfShips;
 	}
+
+	checkAllShipsSunk() {}
+
+	changeVisible() {}
 
 	placeShip(shipLength, xCell, yCell, dir) {
 		if (!this.#checkConditions(shipLength, xCell, yCell, dir)) {
@@ -52,7 +59,18 @@ export class Gameboard {
 		this.listOfShips.set(ship, shipPosition);
 	}
 
-	receiveAttack(coordinate) {}
+	receiveAttack(coordinate) {
+		let [x, y] = [...String(coordinate)];
+		return this.map[x][y] === 'S'
+			? (this.#hitShip(coordinate), (this.map[x][y] = HIT))
+			: (this.map[x][y] = MISS);
+	}
+
+	#hitShip(coordinate) {
+		for (let [ship, coordinates] of this.listOfShips) {
+			return coordinates.includes(coordinate) ? ship.hit() : null;
+		}
+	}
 
 	#fillAdjacentCells(size, xCell, yCell, direction) {
 		let xStart = xCell - 1;
