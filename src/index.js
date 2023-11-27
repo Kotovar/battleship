@@ -12,5 +12,14 @@ board.placeShip(3, 0, 2, 'y');
 console.log(board.map);
 
 board.receiveAttack('55');
+board.receiveAttack('56');
+board.receiveAttack('57');
 board.receiveAttack('14');
+board.receiveAttack('00');
+board.receiveAttack('10');
+board.receiveAttack('20');
+board.receiveAttack('02');
+board.receiveAttack('12');
+board.receiveAttack('22');
 console.log(board.getlistOfShips());
+console.log(board.checkAllShipsSunk());

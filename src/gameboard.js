@@ -12,8 +12,6 @@ export class Gameboard {
 
 	listOfShips = new Map();
 
-	allMapVisible = true;
-
 	map = [
 		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
 		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
@@ -31,9 +29,12 @@ export class Gameboard {
 		return this.listOfShips;
 	}
 
-	checkAllShipsSunk() {}
-
-	changeVisible() {}
+	checkAllShipsSunk() {
+		for (let ship of this.listOfShips.keys()) {
+			if (!ship.isSunk()) return false;
+		}
+		return true;
+	}
 
 	placeShip(shipLength, xCell, yCell, dir) {
 		if (!this.#checkConditions(shipLength, xCell, yCell, dir)) {
@@ -67,9 +68,15 @@ export class Gameboard {
 	}
 
 	#hitShip(coordinate) {
-		for (let [ship, coordinates] of this.listOfShips) {
-			return coordinates.includes(coordinate) ? ship.hit() : null;
+		let hit = false;
+		for (let [ship, coords] of this.listOfShips) {
+			if (coords.includes(coordinate)) {
+				ship.hit();
+				hit = true;
+				break;
+			}
 		}
+		return hit;
 	}
 
 	#fillAdjacentCells(size, xCell, yCell, direction) {
