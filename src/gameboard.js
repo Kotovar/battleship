@@ -62,7 +62,7 @@ export class Gameboard {
 
 	receiveAttack(coordinate) {
 		let [x, y] = [...String(coordinate)];
-		return this.map[x][y] === 'S'
+		return this.map[x][y] === SHIP_CELL
 			? (this.#hitShip(coordinate), (this.map[x][y] = HIT))
 			: (this.map[x][y] = MISS);
 	}

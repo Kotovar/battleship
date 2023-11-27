@@ -59,3 +59,13 @@ test('Если корабли близко - вернуть ошибку', () =>
 
 	expect(board.listOfShips.size).toBe(1);
 });
+
+test('Если все корабли сбиты, функция checkAllShipsSunk подтвердит это, либо вернёт false если это не так', () => {
+	board.placeShip(3, 0, 0, 'y');
+	board.receiveAttack('00');
+	board.receiveAttack('10');
+	board.receiveAttack('20');
+	expect(board.checkAllShipsSunk()).toBe(true);
+	board.placeShip(3, 5, 0, 'y');
+	expect(board.checkAllShipsSunk()).toBe(false);
+});
