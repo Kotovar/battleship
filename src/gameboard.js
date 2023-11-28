@@ -30,9 +30,12 @@ export class Gameboard {
 	}
 
 	checkAllShipsSunk() {
-		for (let ship of this.listOfShips.keys()) {
-			if (!ship.isSunk()) return false;
+		for (const ship of this.listOfShips.keys()) {
+			if (!ship.isSunk()) {
+				return false;
+			}
 		}
+
 		return true;
 	}
 
@@ -61,29 +64,31 @@ export class Gameboard {
 	}
 
 	receiveAttack(coordinate) {
-		let [x, y] = [...String(coordinate)];
-		return this.map[x][y] === SHIP_CELL
-			? (this.#hitShip(coordinate), (this.map[x][y] = HIT))
+		const [x, y] = [...String(coordinate)];
+		// eslint-disable-next-line no-unused-expressions
+		this.map[x][y] === SHIP_CELL
+			? (this._hitShip(coordinate), (this.map[x][y] = HIT))
 			: (this.map[x][y] = MISS);
 	}
 
-	#hitShip(coordinate) {
+	_hitShip(coordinate) {
 		let hit = false;
-		for (let [ship, coords] of this.listOfShips) {
+		for (const [ship, coords] of this.listOfShips) {
 			if (coords.includes(coordinate)) {
 				ship.hit();
 				hit = true;
 				break;
 			}
 		}
+
 		return hit;
 	}
 
 	#fillAdjacentCells(size, xCell, yCell, direction) {
-		let xStart = xCell - 1;
-		let xEnd = direction === 'x' ? xCell + 1 : xCell + size;
-		let yStart = yCell - 1;
-		let yEnd = direction === 'y' ? yCell + 1 : yCell + size;
+		const xStart = xCell - 1;
+		const xEnd = direction === 'x' ? xCell + 1 : xCell + size;
+		const yStart = yCell - 1;
+		const yEnd = direction === 'y' ? yCell + 1 : yCell + size;
 
 		for (let x = xStart; x <= xEnd; x++) {
 			for (let y = yStart; y <= yEnd; y++) {
@@ -123,5 +128,54 @@ export class Gameboard {
 	#isShipCrossing = (cell) =>
 		[...this.listOfShips].some(([, position]) => position.includes(cell));
 
-	#isAdjacentCrossing = (x, y) => (this.map[x][y] === 'O' ? true : false);
+	#isAdjacentCrossing = (x, y) => this.map[x][y] === 'O';
+}
+
+export class PlayerBoard extends Gameboard {
+	possibleShots = [];
+	constructor(player) {
+		super(player);
+		this.fillPossibleShots();
+	}
+
+	fillPossibleShots() {
+		for (let i = 0; i < 10; i++) {
+			for (let j = 0; j < 10; j++) {
+				this.possibleShots.push(`${i}${j}`);
+			}
+		}
+	}
+}
+
+export class ComputerBoard extends Gameboard {
+	hiddenMap = [
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+		['.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+	];
+
+	receiveAttack(coordinate) {
+		// Получаем координаты выстрела из строки
+		const [x, y] = [...String(coordinate)];
+		// Проверяем, есть ли корабль в этой клетке на основной доске
+		if (this.map[x][y] === SHIP_CELL) {
+			// Вызываем метод #hitShip и присваиваем значение клетке на основной доске
+			this._hitShip(coordinate);
+			this.map[x][y] = HIT;
+			// Присваиваем то же значение клетке на скрытой доске
+			this.hiddenMap[x][y] = HIT;
+		} else {
+			// Присваиваем значение клетке на основной доске
+			this.map[x][y] = MISS;
+			// Присваиваем то же значение клетке на скрытой доске
+			this.hiddenMap[x][y] = MISS;
+		}
+	}
 }

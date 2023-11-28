@@ -13,9 +13,6 @@
 		"prefer-template": "error",
 		"capitalized-comments": "off",
 		"arrow-parens": ["error", "always"],
-		"operator-linebreak": [
-			"after",
-			{"overrides": {"?": "before", ":": "before"}}
-		]
+		"operator-linebreak": 0
 	}
 }
