@@ -1,11 +1,14 @@
 import {ComputerBoard, PlayerBoard} from './gameboard';
 import {playerHuman, playerComputer} from './player';
+import {fillPlayerBoardsDOM, generateShell, playerShot} from './generateDOM';
 
 export class Game {
 	constructor(player1, player2) {
 		this.playerBoard = new PlayerBoard(player1);
 		this.computerBoard = new ComputerBoard(player2);
 		this.fillBoards();
+		generateShell();
+		fillPlayerBoardsDOM(this.playerBoard);
 	}
 
 	fillBoards() {
@@ -34,11 +37,15 @@ export class Game {
 	computerShot() {
 		const shot = playerComputer(this.playerBoard);
 		this.playerBoard.receiveAttack(shot);
+		fillPlayerBoardsDOM(this.playerBoard);
+		this.checkWinner();
 	}
 
 	playerShot() {
 		const shot = playerHuman();
 		this.computerBoard.receiveAttack(shot);
+		playerShot(this.computerBoard, shot);
+		this.checkWinner();
 	}
 
 	checkWinner() {
