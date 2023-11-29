@@ -34,7 +34,7 @@ export function fillPlayerBoardsDOM(board) {
 	}
 }
 
-export function playerShot(board, shot) {
+export function playerShotDOM(board, shot) {
 	const [x, y] = shot;
 	const element = document.getElementsByClassName(`cell-${x}${y}`);
 	element[1].textContent = board.map[x][y];

@@ -1,6 +1,6 @@
 import {ComputerBoard, PlayerBoard} from './gameboard';
 import {playerHuman, playerComputer} from './player';
-import {fillPlayerBoardsDOM, generateShell, playerShot} from './generateDOM';
+import {fillPlayerBoardsDOM, generateShell, playerShotDOM} from './generateDOM';
 
 export class Game {
 	constructor(player1, player2) {
@@ -10,6 +10,28 @@ export class Game {
 		this.fillBoardComputer();
 		generateShell();
 		fillPlayerBoardsDOM(this.playerBoard);
+	}
+
+	async start() {
+		let turn = 'player';
+		let winner = null;
+		while (!winner) {
+			if (turn === 'player') {
+				const hit = await this.playerShot();
+				if (hit) {
+					turn = 'computer';
+				}
+			} else {
+				const hit = this.computerShot();
+				if (hit) {
+					turn = 'player';
+				}
+			}
+
+			winner = this.checkWinner();
+		}
+
+		alert(`${winner} won the game!`);
 	}
 
 	fillBoardPlayer() {
@@ -53,14 +75,21 @@ export class Game {
 		const shot = playerComputer(this.playerBoard);
 		this.playerBoard.receiveAttack(shot);
 		fillPlayerBoardsDOM(this.playerBoard);
-		this.checkWinner();
+		return true;
 	}
 
 	async playerShot() {
 		const shot = await playerHuman();
 		this.computerBoard.receiveAttack(shot);
-		playerShot(this.computerBoard, shot);
-		this.checkWinner();
+		playerShotDOM(this.computerBoard, shot);
+		const [x, y] = shot;
+		console.log(x, y);
+		if (this.computerBoard.map[x][y] === 'X') {
+			console.log('Попал');
+			return false;
+		}
+
+		return true;
 	}
 
 	checkWinner() {
