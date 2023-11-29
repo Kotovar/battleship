@@ -1,61 +1,82 @@
+const ROWS = 10;
+const COLUMNS = 10;
+
 export function generateShell() {
 	const body = document.getElementsByTagName('body')[0];
-	const h1 = document.createElement('h1');
-	const container = document.createElement('div');
-	const divBoardPlayer = document.createElement('div');
-	const divBoardComputer = document.createElement('div');
-	const labelContainer = document.createElement('div');
-	const labelPlayer1 = document.createElement('p');
-	const labelPlayer2 = document.createElement('p');
-	h1.textContent = 'Battleship game';
-	labelPlayer1.textContent = 'You';
-	labelPlayer2.textContent = 'Computer';
 
-	divBoardPlayer.id = 'boardPlayer';
-	divBoardComputer.id = 'boardComputer';
-	container.id = 'container';
-	labelContainer.id = 'labelContainer';
-	labelPlayer1.classList.add('label');
-	labelPlayer2.classList.add('label');
+	createElement('h1', 'Battleship game', '', body);
 
-	body.appendChild(h1);
-	body.appendChild(labelContainer);
-	labelContainer.appendChild(labelPlayer1);
-	labelContainer.appendChild(labelPlayer2);
-	body.appendChild(container);
-	container.appendChild(divBoardPlayer);
-	container.appendChild(divBoardComputer);
+	const labelContainer = createElement('div', '', 'labelContainer', body);
+	createElement('p', 'You', 'label', labelContainer);
+	createElement('p', 'Computer', 'label', labelContainer);
 
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 10; j++) {
-			const cell = document.createElement('div');
-			const cell2 = document.createElement('div');
-			cell.style.width = 'auto';
-			cell.style.height = 'auto';
-			cell2.style.width = 'auto';
-			cell2.style.height = 'auto';
-			divBoardPlayer.appendChild(cell);
-			divBoardComputer.appendChild(cell2);
-			cell.classList.add(`cell-${i}${j}`);
-			cell2.classList.add(`cell-${i}${j}`);
-		}
-	}
+	const container = createElement('div', '', 'container', body);
+	const leftContainer = createElement('div', '', 'leftContainer', container);
+	const rightContainer = createElement('div', '', 'rightContainer', container);
+
+	createElement('div', '', 'fake', leftContainer);
+	createLetterLine(leftContainer);
+	createNumberLine(leftContainer);
+	createBoard(leftContainer);
+
+	createElement('div', '', 'fake', rightContainer);
+	createLetterLine(rightContainer);
+	createNumberLine(rightContainer);
+	createBoard(rightContainer);
 }
 
 export function fillPlayerBoardsDOM(board) {
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 10; j++) {
-			const cell = document.getElementsByClassName(`cell-${i}${j}`);
-			cell[0].textContent =
-				board.map[i][j] === 'O' || board.map[i][j] === '.'
-					? ' '
-					: board.map[i][j];
+	for (const [i, row] of board.map.entries()) {
+		for (const [j, cell] of row.entries()) {
+			const element = document.getElementsByClassName(`cell-${i}${j}`);
+			element[0].textContent = cell === 'O' || cell === '.' ? ' ' : cell;
 		}
 	}
 }
 
 export function playerShot(board, shot) {
 	const [x, y] = shot;
-	const cell = document.getElementsByClassName(`cell-${x}${y}`);
-	cell[1].textContent = board.map[x][y];
+	const element = document.getElementsByClassName(`cell-${x}${y}`);
+	element[1].textContent = board.map[x][y];
+}
+
+function createElement(type, text, className, parent) {
+	const element = document.createElement(type);
+	element.textContent = text;
+	if (className) {
+		element.classList.add(className);
+	}
+
+	parent.appendChild(element);
+	return element;
+}
+
+function createBoard(parent) {
+	const board = createElement('div', '', 'board', parent);
+	for (let i = 0; i < ROWS; i++) {
+		for (let j = 0; j < COLUMNS; j++) {
+			const cell = createElement('div', '', 'cell', board);
+			cell.classList.add(`cell-${i}${j}`);
+		}
+	}
+
+	return board;
+}
+
+function createNumberLine(parent) {
+	const numberLine = createElement('div', '', 'numberLine', parent);
+	for (let i = 0; i < ROWS; i++) {
+		createElement('div', i + 1, 'number', numberLine);
+	}
+
+	return numberLine;
+}
+
+function createLetterLine(parent) {
+	const letterLine = createElement('div', '', 'letterLine', parent);
+	for (let i = 0; i < COLUMNS; i++) {
+		createElement('div', String.fromCharCode(65 + i), 'letter', letterLine);
+	}
+
+	return letterLine;
 }

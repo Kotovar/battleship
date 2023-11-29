@@ -8,7 +8,7 @@ h1 {
 	text-align: center;
 }
 
-#labelContainer {
+.labelContainer {
 	display: flex;
 	justify-content: space-around;
 	width: 80vw;
@@ -20,7 +20,7 @@ h1 {
 	font-size: 3rem;
 }
 
-#container {
+.container {
 	height: 80vh;
 	width: 80vw;
 	margin: 0 auto;
@@ -29,21 +29,41 @@ h1 {
 	align-items: center;
 	gap: 5rem;
 	padding: 1rem;
+}
 
-	#boardPlayer,
-	#boardComputer {
-		aspect-ratio: 1 / 1;
-		flex: 1;
-		display: grid;
-		grid-template-columns: repeat(10, 1fr);
-		grid-template-rows: repeat(10, 1fr);
-
-		div {
-			border: 1px solid black;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 1.8rem;
-		}
+.board {
+	aspect-ratio: 1 / 1;
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: repeat(10, 1fr);
+	div {
+		border: 1px solid black;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.8rem;
 	}
+}
+
+.leftContainer,
+.rightContainer {
+	display: grid;
+	grid-template-columns: 10px 1fr;
+	grid-template-rows: 10px 1fr;
+	gap: 1rem;
+	flex: 1;
+}
+
+.letterLine {
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-end;
+	font-weight: 900;
+}
+
+.numberLine {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: flex-end;
 }
