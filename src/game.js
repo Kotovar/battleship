@@ -6,33 +6,47 @@ export class Game {
 	constructor(player1, player2) {
 		this.playerBoard = new PlayerBoard(player1);
 		this.computerBoard = new ComputerBoard(player2);
-		this.fillBoards();
+		this.fillBoardPlayer();
+		this.fillBoardComputer();
 		generateShell();
 		fillPlayerBoardsDOM(this.playerBoard);
 	}
 
-	fillBoards() {
-		this.playerBoard.placeShip(4, 0, 0, 'x');
-		this.playerBoard.placeShip(3, 2, 0, 'y');
-		this.playerBoard.placeShip(3, 5, 5, 'y');
-		this.playerBoard.placeShip(2, 0, 5, 'x');
-		this.playerBoard.placeShip(2, 4, 2, 'x');
-		this.playerBoard.placeShip(2, 7, 3, 'y');
-		this.playerBoard.placeShip(1, 0, 9, 'y');
-		this.playerBoard.placeShip(1, 9, 9, 'y');
-		this.playerBoard.placeShip(1, 3, 8, 'y');
-		this.playerBoard.placeShip(1, 9, 1, 'y');
+	fillBoardPlayer() {
+		this.#randomGeneration(this.playerBoard);
+	}
 
-		this.computerBoard.placeShip(4, 0, 0, 'x');
-		this.computerBoard.placeShip(3, 2, 0, 'y');
-		this.computerBoard.placeShip(3, 5, 5, 'y');
-		this.computerBoard.placeShip(2, 0, 5, 'x');
-		this.computerBoard.placeShip(2, 4, 2, 'x');
-		this.computerBoard.placeShip(2, 7, 3, 'y');
-		this.computerBoard.placeShip(1, 0, 9, 'y');
-		this.computerBoard.placeShip(1, 9, 9, 'y');
-		this.computerBoard.placeShip(1, 3, 8, 'y');
-		this.computerBoard.placeShip(1, 9, 1, 'y');
+	fillBoardComputer() {
+		this.#randomGeneration(this.computerBoard);
+	}
+
+	#randomGeneration(board) {
+		const shipsLength = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+		const dir = ['x', 'y'];
+		while (shipsLength.length > 0) {
+			const ship = shipsLength[0];
+			let placed = false;
+			let attempts = 0;
+			while (!placed && attempts < 100) {
+				const randomIndex = Math.floor(
+					Math.random() * this.playerBoard.possibleShots.length,
+				);
+				const coordinate = this.playerBoard.possibleShots[randomIndex];
+				const [x, y] = coordinate;
+				const randomDir = dir[Math.floor(Math.random() * 2)];
+				if (board._checkConditions(ship, Number(x), Number(y), randomDir)) {
+					board.placeShip(ship, Number(x), Number(y), randomDir);
+					shipsLength.shift();
+					placed = true;
+				}
+
+				attempts++;
+			}
+
+			if (!placed) {
+				break;
+			}
+		}
 	}
 
 	computerShot() {

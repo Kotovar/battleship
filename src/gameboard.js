@@ -40,7 +40,7 @@ export class Gameboard {
 	}
 
 	placeShip(shipLength, xCell, yCell, dir) {
-		if (!this.#checkConditions(shipLength, xCell, yCell, dir)) {
+		if (!this._checkConditions(shipLength, xCell, yCell, dir)) {
 			return `Измените ввод ${shipLength} ${xCell} ${yCell} ${dir}`;
 		}
 
@@ -100,14 +100,12 @@ export class Gameboard {
 		}
 	}
 
-	#checkConditions(shipLength, xCell, yCell, dir) {
+	_checkConditions(shipLength, xCell, yCell, dir) {
 		if (this.#isCorrectCoordinate(shipLength, xCell, yCell, dir)) {
-			console.log('Некорректный ввод');
 			return false;
 		}
 
 		if (this.listOfShips.size && this.#isShipCrossing(`${xCell}${yCell}`)) {
-			console.log('Пересечение с другим кораблём');
 			return false;
 		}
 
@@ -115,7 +113,6 @@ export class Gameboard {
 			this.listOfShips.size &&
 			this.#isAdjacentCrossing(shipLength, xCell, yCell, dir)
 		) {
-			console.log('Близкое расположение к другому кораблю');
 			return false;
 		}
 
