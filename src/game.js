@@ -22,6 +22,7 @@ export class Game {
 		this.playerBoard.placeShip(1, 9, 9, 'y');
 		this.playerBoard.placeShip(1, 3, 8, 'y');
 		this.playerBoard.placeShip(1, 9, 1, 'y');
+
 		this.computerBoard.placeShip(4, 0, 0, 'x');
 		this.computerBoard.placeShip(3, 2, 0, 'y');
 		this.computerBoard.placeShip(3, 5, 5, 'y');

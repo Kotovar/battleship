@@ -111,7 +111,10 @@ export class Gameboard {
 			return false;
 		}
 
-		if (this.listOfShips.size && this.#isAdjacentCrossing(xCell, yCell)) {
+		if (
+			this.listOfShips.size &&
+			this.#isAdjacentCrossing(shipLength, xCell, yCell, dir)
+		) {
 			console.log('Близкое расположение к другому кораблю');
 			return false;
 		}
@@ -128,7 +131,33 @@ export class Gameboard {
 	#isShipCrossing = (cell) =>
 		[...this.listOfShips].some(([, position]) => position.includes(cell));
 
-	#isAdjacentCrossing = (x, y) => this.map[x][y] === 'O';
+	#isAdjacentCrossing(size, x, y, dir) {
+		if (this.map[x][y] === 'O') {
+			return true;
+		}
+
+		if (dir === 'x' && size > 1) {
+			for (let i = 1; i < size; i++) {
+				if (
+					this.map[x][y + i] === SHIP_CELL ||
+					this.map[x][y + i] === EMPTY_CELL
+				) {
+					return true;
+				}
+			}
+		} else if (dir === 'y' && size > 1) {
+			for (let i = 1; i < size; i++) {
+				if (
+					this.map[x + i][y] === SHIP_CELL ||
+					this.map[x + i][y] === EMPTY_CELL
+				) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }
 
 export class PlayerBoard extends Gameboard {
