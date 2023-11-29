@@ -42,8 +42,8 @@ export class Game {
 		this.checkWinner();
 	}
 
-	playerShot() {
-		const shot = playerHuman();
+	async playerShot() {
+		const shot = await playerHuman();
 		this.computerBoard.receiveAttack(shot);
 		playerShot(this.computerBoard, shot);
 		this.checkWinner();

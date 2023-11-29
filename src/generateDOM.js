@@ -29,7 +29,7 @@ export function fillPlayerBoardsDOM(board) {
 	for (const [i, row] of board.map.entries()) {
 		for (const [j, cell] of row.entries()) {
 			const element = document.getElementsByClassName(`cell-${i}${j}`);
-			element[0].textContent = cell === 'O' || cell === '.' ? ' ' : cell;
+			element[0].textContent = cell === 'O' || cell === ' ' ? ' ' : cell;
 		}
 	}
 }

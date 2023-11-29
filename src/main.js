@@ -7,5 +7,5 @@ const newGame = new Game('Игрок-человек', 'Компьютер');
 newGame.computerShot();
 newGame.computerShot();
 newGame.playerShot();
-newGame.playerShot();
-console.log(newGame.playerBoard);
+
+console.log(newGame);
