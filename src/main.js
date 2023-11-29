@@ -1,9 +1,16 @@
 import '../dist/css/style.css';
 import {Game} from './game';
+import {generateShell, cleanShell} from './generateDOM';
 
-// создание игры
+generateShell();
 const newGame = new Game('Player', 'Computer');
-
+const button = document.getElementsByClassName('button')[0];
 newGame.start();
-
-console.log(newGame);
+button.addEventListener('click', () => {
+	const ask = confirm('Start a new game?');
+	if (ask) {
+		cleanShell(newGame.computerBoard);
+		newGame.reset();
+		newGame.start();
+	}
+});

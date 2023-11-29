@@ -7,7 +7,7 @@ export function playerHuman() {
 				clearInterval(interval);
 				shotPlayer = null;
 			}
-		}, 1000);
+		}, 100);
 	});
 }
 
@@ -28,7 +28,6 @@ function startListeningPlayerTurn() {
 function handler(e) {
 	const field = document.getElementsByClassName('board')[1];
 	if (e.target.classList.contains('cell') && e.target.textContent === '') {
-		console.log(e.target.textContent);
 		shotPlayer = e.target.classList[1].slice(5);
 		field.removeEventListener('click', handler);
 	}

@@ -7,6 +7,8 @@ export function generateShell() {
 	createElement('h1', 'Battleship game', '', body);
 
 	const labelContainer = createElement('div', '', 'labelContainer', body);
+	const divButton = createElement('div', '', 'divButton', body);
+	createElement('button', 'Start Game', 'button', divButton);
 	createElement('p', 'You', 'label', labelContainer);
 	createElement('p', 'Computer', 'label', labelContainer);
 
@@ -23,6 +25,15 @@ export function generateShell() {
 	createLetterLine(rightContainer);
 	createNumberLine(rightContainer);
 	createBoard(rightContainer);
+}
+
+export function cleanShell(board) {
+	for (const [i, row] of board.map.entries()) {
+		for (const j of row.keys()) {
+			const element = document.getElementsByClassName(`cell-${i}${j}`);
+			element[1].textContent = '';
+		}
+	}
 }
 
 export function fillPlayerBoardsDOM(board) {

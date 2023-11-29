@@ -8,7 +8,14 @@ export class Game {
 		this.computerBoard = new ComputerBoard(player2);
 		this.fillBoardPlayer();
 		this.fillBoardComputer();
-		generateShell();
+		fillPlayerBoardsDOM(this.playerBoard);
+	}
+
+	reset() {
+		this.playerBoard = new PlayerBoard(this.playerBoard.player);
+		this.computerBoard = new ComputerBoard(this.computerBoard.player);
+		this.fillBoardPlayer();
+		this.fillBoardComputer();
 		fillPlayerBoardsDOM(this.playerBoard);
 	}
 
@@ -17,6 +24,7 @@ export class Game {
 		let winner = null;
 		while (!winner) {
 			if (turn === 'player') {
+				// eslint-disable-next-line no-await-in-loop
 				const hit = await this.playerShot();
 				if (hit) {
 					turn = 'computer';
@@ -83,9 +91,7 @@ export class Game {
 		this.computerBoard.receiveAttack(shot);
 		playerShotDOM(this.computerBoard, shot);
 		const [x, y] = shot;
-		console.log(x, y);
 		if (this.computerBoard.map[x][y] === 'X') {
-			console.log('Попал');
 			return false;
 		}
 
