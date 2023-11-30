@@ -1,8 +1,8 @@
 import {Ship} from './ship';
 
-const SHIP_CELL = '◻';
+const SHIP_CELL = '☐';
 const EMPTY_CELL = 'O';
-const HIT = '▣';
+const HIT = '☒';
 const MISS = '·';
 
 export class Gameboard {
@@ -213,30 +213,69 @@ export class ComputerBoard extends Gameboard {
 		}
 	}
 
-	// _hitShip(coordinate) {
-	// 	let hit = false;
-	// 	for (const [ship, coords] of this.listOfShips) {
-	// 		if (coords.includes(coordinate)) {
-	// 			ship.hit();
-	// 			this.isSunkShip(ship, coords, coordinate);
-	// 			hit = true;
-	// 			break;
-	// 		}
-	// 	}
-
-	// 	return hit;
-	// }
-
 	isSunkShip(ship, coords, hit) {
 		const [x, y] = hit;
 		let cell = document.getElementsByClassName(`cell-${x}${y}`)[1];
 		cell.style.color = ship.isSunk() ? 'red' : 'purple';
 		if (ship.isSunk()) {
+			this.#fillCells(coords);
 			for (const coor of coords) {
 				const [x, y] = coor;
 				cell = document.getElementsByClassName(`cell-${x}${y}`)[1];
 				cell.style.color = 'red';
 			}
+		}
+	}
+
+	#fillCells(shipCoords) {
+		for (const coor of shipCoords) {
+			const [x, y] = coor;
+			this.#fillSingleCell(Number(x), Number(y));
+		}
+	}
+
+	// eslint-disable-next-line complexity
+	#fillSingleCell(x, y) {
+		let cell;
+		const SIZE = this.map.length - 1;
+		if (x > 0 && this.map[x - 1][y] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x - 1}${y}`)[1];
+			cell.textContent = MISS;
+		}
+
+		if (y > 0 && this.map[x][y - 1] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x}${y - 1}`)[1];
+			cell.textContent = MISS;
+		}
+
+		if (x > 0 && y > 0 && this.map[x - 1][y - 1] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x - 1}${y - 1}`)[1];
+			cell.textContent = MISS;
+		}
+
+		if (x > 0 && y < SIZE && this.map[x - 1][y + 1] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x - 1}${y + 1}`)[1];
+			cell.textContent = MISS;
+		}
+
+		if (y < SIZE && this.map[x][y + 1] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x}${y + 1}`)[1];
+			cell.textContent = MISS;
+		}
+
+		if (x < SIZE && y > 0 && this.map[x + 1][y - 1] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x + 1}${y - 1}`)[1];
+			cell.textContent = MISS;
+		}
+
+		if (x < SIZE && this.map[x + 1][y] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x + 1}${y}`)[1];
+			cell.textContent = MISS;
+		}
+
+		if (x < SIZE && y < SIZE && this.map[x + 1][y + 1] === EMPTY_CELL) {
+			cell = document.getElementsByClassName(`cell-${x + 1}${y + 1}`)[1];
+			cell.textContent = MISS;
 		}
 	}
 }

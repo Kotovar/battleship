@@ -28,12 +28,12 @@ export function generateShell() {
 	createBoard(rightContainer);
 }
 
-export function cleanShell(board) {
+export function cleanShell(board, number) {
 	for (const [i, row] of board.map.entries()) {
 		for (const j of row.keys()) {
 			const element = document.getElementsByClassName(`cell-${i}${j}`);
-			element[1].textContent = '';
-			element[1].style.color = 'black';
+			element[number].textContent = '';
+			element[number].style.color = 'black';
 		}
 	}
 }
