@@ -7,6 +7,7 @@ const newGame = new Game('Player', 'Computer');
 const button = document.getElementsByClassName('button')[0];
 newGame.start();
 button.addEventListener('click', () => {
+	// eslint-disable-next-line no-alert
 	const ask = confirm('Start a new game?');
 	if (ask) {
 		cleanShell(newGame.computerBoard);

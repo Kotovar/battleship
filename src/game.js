@@ -29,7 +29,7 @@ export class Game {
 				if (hit) {
 					turn = 'computer';
 				}
-			} else {
+			} else if (turn === 'computer') {
 				const hit = this.computerShot();
 				if (hit) {
 					turn = 'player';
@@ -41,6 +41,34 @@ export class Game {
 
 		alert(`${winner} won the game!`);
 	}
+
+	// async start() {
+	// 	let turn = 'player';
+	// 	let winner = null;
+	// 	while (!winner) {
+	// 		if (turn === 'player') {
+	// 			// eslint-disable-next-line no-await-in-loop
+	// 			const hit = await this.playerShot();
+	// 			if (hit) {
+	// 				turn = 'computer';
+	// 			}
+	// 		} else if (turn === 'computer') {
+	// 			let hit = this.computerShot();
+	// 			while (!hit) {
+	// 				//
+	// 				hit = this.computerShot();
+	// 			}
+
+	// 			if (hit) {
+	// 				turn = 'player';
+	// 			}
+	// 		}
+
+	// 		winner = this.checkWinner();
+	// 	}
+
+	// 	alert(`${winner} won the game!`);
+	// }
 
 	fillBoardPlayer() {
 		this.#randomGeneration(this.playerBoard);
@@ -83,6 +111,11 @@ export class Game {
 		const shot = playerComputer(this.playerBoard);
 		this.playerBoard.receiveAttack(shot);
 		fillPlayerBoardsDOM(this.playerBoard);
+		const [x, y] = shot;
+		if (this.playerBoard.map[x][y] === 'X') {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -109,4 +142,6 @@ export class Game {
 
 		return null;
 	}
+
+	checkSunkShip() {}
 }
