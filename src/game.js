@@ -31,6 +31,7 @@ export class Game {
 				}
 			} else if (turn === 'computer') {
 				const hit = this.computerShot();
+
 				if (hit) {
 					turn = 'player';
 				}
@@ -85,7 +86,7 @@ export class Game {
 		this.playerBoard.receiveAttack(shot);
 		fillPlayerBoardsDOM(this.playerBoard);
 		const [x, y] = shot;
-		if (this.playerBoard.map[x][y] === 'X') {
+		if (this.playerBoard.map[x][y] === '☒') {
 			return false;
 		}
 
@@ -97,7 +98,7 @@ export class Game {
 		this.computerBoard.receiveAttack(shot);
 		playerShotDOM(this.computerBoard, shot);
 		const [x, y] = shot;
-		if (this.computerBoard.map[x][y] === 'X') {
+		if (this.computerBoard.map[x][y] === '☒') {
 			return false;
 		}
 

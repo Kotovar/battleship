@@ -130,7 +130,7 @@ export class Gameboard {
 		[...this.listOfShips].some(([, position]) => position.includes(cell));
 
 	#isAdjacentCrossing(size, x, y, dir) {
-		if (this.map[x][y] === 'O') {
+		if (this.map[x][y] === EMPTY_CELL) {
 			return true;
 		}
 
@@ -156,6 +156,48 @@ export class Gameboard {
 
 		return false;
 	}
+
+	fillCells(shipCoords, numberDesk) {
+		for (const coor of shipCoords) {
+			const [x, y] = coor;
+			this.fillSingleCell(Number(x), Number(y), numberDesk);
+		}
+	}
+
+	fillSingleCell(x, y, numberDesk) {
+		let cell;
+		const SIZE = this.map.length - 1;
+		const offsets = [-1, 0, 1];
+		for (const dx of offsets) {
+			for (const dy of offsets) {
+				if (dx === 0 && dy === 0) {
+					continue;
+				}
+
+				const newX = x + dx;
+				const newY = y + dy;
+				if (
+					newX >= 0 &&
+					newX <= SIZE &&
+					newY >= 0 &&
+					newY <= SIZE &&
+					this.map[newX][newY] === EMPTY_CELL
+				) {
+					if (numberDesk === 0) {
+						this.map[newX][newY] = MISS;
+						const coor = this.possibleShots[`${newX}${newY}`];
+						this.possibleShots.splice(coor, 1);
+						console.log(this.possibleShots.length);
+					}
+
+					cell = document.getElementsByClassName(`cell-${newX}${newY}`)[
+						numberDesk
+					];
+					cell.textContent = MISS;
+				}
+			}
+		}
+	}
 }
 
 export class PlayerBoard extends Gameboard {
@@ -178,6 +220,7 @@ export class PlayerBoard extends Gameboard {
 		let cell = document.getElementsByClassName(`cell-${x}${y}`)[0];
 		cell.style.color = ship.isSunk() ? 'red' : 'purple';
 		if (ship.isSunk()) {
+			this.fillCells(coords, 0);
 			for (const coor of coords) {
 				const [x, y] = coor;
 				cell = document.getElementsByClassName(`cell-${x}${y}`)[0];
@@ -218,64 +261,12 @@ export class ComputerBoard extends Gameboard {
 		let cell = document.getElementsByClassName(`cell-${x}${y}`)[1];
 		cell.style.color = ship.isSunk() ? 'red' : 'purple';
 		if (ship.isSunk()) {
-			this.#fillCells(coords);
+			this.fillCells(coords, 1);
 			for (const coor of coords) {
 				const [x, y] = coor;
 				cell = document.getElementsByClassName(`cell-${x}${y}`)[1];
 				cell.style.color = 'red';
 			}
-		}
-	}
-
-	#fillCells(shipCoords) {
-		for (const coor of shipCoords) {
-			const [x, y] = coor;
-			this.#fillSingleCell(Number(x), Number(y));
-		}
-	}
-
-	// eslint-disable-next-line complexity
-	#fillSingleCell(x, y) {
-		let cell;
-		const SIZE = this.map.length - 1;
-		if (x > 0 && this.map[x - 1][y] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x - 1}${y}`)[1];
-			cell.textContent = MISS;
-		}
-
-		if (y > 0 && this.map[x][y - 1] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x}${y - 1}`)[1];
-			cell.textContent = MISS;
-		}
-
-		if (x > 0 && y > 0 && this.map[x - 1][y - 1] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x - 1}${y - 1}`)[1];
-			cell.textContent = MISS;
-		}
-
-		if (x > 0 && y < SIZE && this.map[x - 1][y + 1] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x - 1}${y + 1}`)[1];
-			cell.textContent = MISS;
-		}
-
-		if (y < SIZE && this.map[x][y + 1] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x}${y + 1}`)[1];
-			cell.textContent = MISS;
-		}
-
-		if (x < SIZE && y > 0 && this.map[x + 1][y - 1] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x + 1}${y - 1}`)[1];
-			cell.textContent = MISS;
-		}
-
-		if (x < SIZE && this.map[x + 1][y] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x + 1}${y}`)[1];
-			cell.textContent = MISS;
-		}
-
-		if (x < SIZE && y < SIZE && this.map[x + 1][y + 1] === EMPTY_CELL) {
-			cell = document.getElementsByClassName(`cell-${x + 1}${y + 1}`)[1];
-			cell.textContent = MISS;
 		}
 	}
 }
