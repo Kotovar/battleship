@@ -17,6 +17,8 @@ export class Game {
 		this.fillBoardPlayer();
 		this.fillBoardComputer();
 		fillPlayerBoardsDOM(this.playerBoard);
+		const winerLabel = document.getElementsByClassName('winnerLabel')[0];
+		winerLabel.textContent = '';
 	}
 
 	async start() {
@@ -87,9 +89,11 @@ export class Game {
 		fillPlayerBoardsDOM(this.playerBoard);
 		const [x, y] = shot;
 		if (this.playerBoard.map[x][y] === '☒') {
+			this.playerBoard.isPreviousAttackHit = true;
 			return false;
 		}
 
+		this.playerBoard.isPreviousAttackHit = false;
 		return true;
 	}
 

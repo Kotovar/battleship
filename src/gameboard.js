@@ -3,7 +3,7 @@ import {Ship} from './ship';
 const SHIP_CELL = '☐';
 const EMPTY_CELL = 'O';
 const HIT = '☒';
-const MISS = '·';
+export const MISS = '·';
 
 export class Gameboard {
 	constructor(player) {
@@ -65,6 +65,7 @@ export class Gameboard {
 
 	receiveAttack(coordinate) {
 		const [x, y] = [...String(coordinate)];
+
 		// eslint-disable-next-line no-unused-expressions
 		this.map[x][y] === SHIP_CELL
 			? (this._hitShip(coordinate), (this.map[x][y] = HIT))
@@ -185,9 +186,8 @@ export class Gameboard {
 				) {
 					if (numberDesk === 0) {
 						this.map[newX][newY] = MISS;
-						const coor = this.possibleShots[`${newX}${newY}`];
+						const coor = this.possibleShots.indexOf(`${newX}${newY}`);
 						this.possibleShots.splice(coor, 1);
-						console.log(this.possibleShots.length);
 					}
 
 					cell = document.getElementsByClassName(`cell-${newX}${newY}`)[
@@ -202,6 +202,9 @@ export class Gameboard {
 
 export class PlayerBoard extends Gameboard {
 	possibleShots = [];
+	isPreviousAttackHit = false;
+	previousCoord = ' ';
+
 	constructor(player) {
 		super(player);
 		this.fillPossibleShots();
