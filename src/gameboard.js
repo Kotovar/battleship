@@ -1,8 +1,8 @@
 import {Ship} from './ship';
 
-const SHIP_CELL = 'S';
+const SHIP_CELL = '◻';
 const EMPTY_CELL = 'O';
-const HIT = 'X';
+const HIT = '▣';
 const MISS = '·';
 
 export class Gameboard {
@@ -76,6 +76,7 @@ export class Gameboard {
 		for (const [ship, coords] of this.listOfShips) {
 			if (coords.includes(coordinate)) {
 				ship.hit();
+				this.isSunkShip(ship, coords, coordinate);
 				hit = true;
 				break;
 			}
@@ -171,6 +172,19 @@ export class PlayerBoard extends Gameboard {
 			}
 		}
 	}
+
+	isSunkShip(ship, coords, hit) {
+		const [x, y] = hit;
+		let cell = document.getElementsByClassName(`cell-${x}${y}`)[0];
+		cell.style.color = ship.isSunk() ? 'red' : 'purple';
+		if (ship.isSunk()) {
+			for (const coor of coords) {
+				const [x, y] = coor;
+				cell = document.getElementsByClassName(`cell-${x}${y}`)[0];
+				cell.style.color = 'red';
+			}
+		}
+	}
 }
 
 export class ComputerBoard extends Gameboard {
@@ -196,6 +210,33 @@ export class ComputerBoard extends Gameboard {
 		} else {
 			this.map[x][y] = MISS;
 			this.hiddenMap[x][y] = MISS;
+		}
+	}
+
+	// _hitShip(coordinate) {
+	// 	let hit = false;
+	// 	for (const [ship, coords] of this.listOfShips) {
+	// 		if (coords.includes(coordinate)) {
+	// 			ship.hit();
+	// 			this.isSunkShip(ship, coords, coordinate);
+	// 			hit = true;
+	// 			break;
+	// 		}
+	// 	}
+
+	// 	return hit;
+	// }
+
+	isSunkShip(ship, coords, hit) {
+		const [x, y] = hit;
+		let cell = document.getElementsByClassName(`cell-${x}${y}`)[1];
+		cell.style.color = ship.isSunk() ? 'red' : 'purple';
+		if (ship.isSunk()) {
+			for (const coor of coords) {
+				const [x, y] = coor;
+				cell = document.getElementsByClassName(`cell-${x}${y}`)[1];
+				cell.style.color = 'red';
+			}
 		}
 	}
 }

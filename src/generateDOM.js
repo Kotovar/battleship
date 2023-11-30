@@ -9,6 +9,7 @@ export function generateShell() {
 	const labelContainer = createElement('div', '', 'labelContainer', body);
 	const divButton = createElement('div', '', 'divButton', body);
 	createElement('button', 'Start Game', 'button', divButton);
+	createElement('h2', '', 'winnerLabel', divButton);
 	createElement('p', 'You', 'label', labelContainer);
 	createElement('p', 'Computer', 'label', labelContainer);
 
@@ -32,6 +33,7 @@ export function cleanShell(board) {
 		for (const j of row.keys()) {
 			const element = document.getElementsByClassName(`cell-${i}${j}`);
 			element[1].textContent = '';
+			element[1].style.color = 'black';
 		}
 	}
 }

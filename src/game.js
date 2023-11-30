@@ -1,6 +1,6 @@
 import {ComputerBoard, PlayerBoard} from './gameboard';
 import {playerHuman, playerComputer} from './player';
-import {fillPlayerBoardsDOM, generateShell, playerShotDOM} from './generateDOM';
+import {fillPlayerBoardsDOM, playerShotDOM} from './generateDOM';
 
 export class Game {
 	constructor(player1, player2) {
@@ -39,36 +39,9 @@ export class Game {
 			winner = this.checkWinner();
 		}
 
-		alert(`${winner} won the game!`);
+		const winerLabel = document.getElementsByClassName('winnerLabel')[0];
+		winerLabel.textContent = `${winner} won the game!`;
 	}
-
-	// async start() {
-	// 	let turn = 'player';
-	// 	let winner = null;
-	// 	while (!winner) {
-	// 		if (turn === 'player') {
-	// 			// eslint-disable-next-line no-await-in-loop
-	// 			const hit = await this.playerShot();
-	// 			if (hit) {
-	// 				turn = 'computer';
-	// 			}
-	// 		} else if (turn === 'computer') {
-	// 			let hit = this.computerShot();
-	// 			while (!hit) {
-	// 				//
-	// 				hit = this.computerShot();
-	// 			}
-
-	// 			if (hit) {
-	// 				turn = 'player';
-	// 			}
-	// 		}
-
-	// 		winner = this.checkWinner();
-	// 	}
-
-	// 	alert(`${winner} won the game!`);
-	// }
 
 	fillBoardPlayer() {
 		this.#randomGeneration(this.playerBoard);
@@ -142,6 +115,4 @@ export class Game {
 
 		return null;
 	}
-
-	checkSunkShip() {}
 }
