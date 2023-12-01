@@ -25,10 +25,6 @@ export class Gameboard {
 		[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
 	];
 
-	getlistOfShips() {
-		return this.listOfShips;
-	}
-
 	checkAllShipsSunk() {
 		for (const ship of this.listOfShips.keys()) {
 			if (!ship.isSunk()) {
@@ -204,10 +200,24 @@ export class PlayerBoard extends Gameboard {
 	possibleShots = [];
 	isPreviousAttackHit = false;
 	previousCoord = ' ';
+	isCurrentDamagedShipSunk = null;
+	damagedShip = null;
+	lastHit = ' ';
 
 	constructor(player) {
 		super(player);
 		this.fillPossibleShots();
+	}
+
+	getDamagedShip() {
+		for (const [ship, coords] of this.listOfShips) {
+			if (coords.includes(this.previousCoord) && !ship.isSunk()) {
+				this.damagedShip = ship;
+				break;
+			} else {
+				this.damagedShip = null;
+			}
+		}
 	}
 
 	fillPossibleShots() {

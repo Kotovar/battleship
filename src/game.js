@@ -90,6 +90,9 @@ export class Game {
 		const [x, y] = shot;
 		if (this.playerBoard.map[x][y] === '☒') {
 			this.playerBoard.isPreviousAttackHit = true;
+			this.playerBoard.getDamagedShip();
+			this.playerBoard.lastHit = shot;
+
 			return false;
 		}
 

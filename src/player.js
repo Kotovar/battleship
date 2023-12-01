@@ -18,8 +18,8 @@ let shotPlayer = null;
 export function playerComputer(board) {
 	let shot;
 	const size = board.map.length - 1;
-	if (board.isPreviousAttackHit) {
-		let [x, y] = board.previousCoord;
+	if (board.isPreviousAttackHit || board.damagedShip !== null) {
+		let [x, y] = board.lastHit;
 		x = Number(x);
 		y = Number(y);
 
