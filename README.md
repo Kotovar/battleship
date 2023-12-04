@@ -44,8 +44,6 @@ A wounded ship is highlighted with a certain color, a sunk ship - with another c
 
 Also, if the computer hits a ship and wounds it, it will try to finish it off in the next moves, and until this ship is sunk, it will not start making random moves again.
 
-```markdown
 ## Credits
 
 This project was inspired by [[The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-battleship)], which is an open source curriculum for learning web development.
-```
