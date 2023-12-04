@@ -1,4 +1,4 @@
-import {MISS} from './gameboard';
+import {MISS, HIT} from './gameboard';
 
 export function playerHuman() {
 	startListeningPlayerTurn();
@@ -28,6 +28,7 @@ export function playerComputer(board) {
 				if (
 					y > 0 &&
 					board.map[x][y - 1] !== MISS &&
+					board.map[x][y - 1] !== HIT &&
 					board.possibleShots.indexOf(`${x}${y - 1}`) !== -1
 				) {
 					return `${x}${y - 1}`;
@@ -37,6 +38,7 @@ export function playerComputer(board) {
 				if (
 					x > 0 &&
 					board.map[x - 1][y] !== MISS &&
+					board.map[x - 1][y] !== HIT &&
 					board.possibleShots.indexOf(`${x - 1}${y}`) !== -1
 				) {
 					return `${x - 1}${y}`;
@@ -46,6 +48,7 @@ export function playerComputer(board) {
 				if (
 					y < size &&
 					board.map[x][y + 1] !== MISS &&
+					board.map[x][y + 1] !== HIT &&
 					board.possibleShots.indexOf(`${x}${y + 1}`) !== -1
 				) {
 					return `${x}${y + 1}`;
@@ -55,6 +58,7 @@ export function playerComputer(board) {
 				if (
 					x < size &&
 					board.map[x + 1][y] !== MISS &&
+					board.map[x + 1][y] !== HIT &&
 					board.possibleShots.indexOf(`${x + 1}${y}`) !== -1
 				) {
 					return `${x + 1}${y}`;
@@ -88,18 +92,24 @@ export function playerComputer(board) {
 			}
 		}
 
+		if (shot === undefined && board.damagedShip !== null) {
+			let [xS, yS] = board.firstHitCoord;
+			xS = Number(xS);
+			yS = Number(yS);
+
+			for (const condition of shuffle(conditions)) {
+				const result = condition(xS, yS);
+				if (result !== undefined) {
+					shot = result;
+					break;
+				}
+			}
+		}
+
 		if (shot === undefined) {
 			const random = Math.floor(Math.random() * board.possibleShots.length);
 			shot = board.possibleShots[random];
 		}
-
-		// if (shot === undefined && board.damagedShip !== null) {
-		// 	const [xS, yS] = board.firstHitCoord;
-		// 	conditions(xS, yS);
-		// } else if (shot === undefined) {
-		// 	const random = Math.floor(Math.random() * board.possibleShots.length);
-		// 	shot = board.possibleShots[random];
-		// }
 
 		const index = board.possibleShots.indexOf(shot);
 		board.possibleShots.splice(index, 1);

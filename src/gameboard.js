@@ -2,7 +2,7 @@ import {Ship} from './ship';
 
 const SHIP_CELL = '☐';
 const EMPTY_CELL = 'O';
-const HIT = '☒';
+export const HIT = '☒';
 export const MISS = '·';
 
 export class Gameboard {
@@ -201,7 +201,6 @@ export class PlayerBoard extends Gameboard {
 	isPreviousAttackHit = false;
 	previousCoord = ' ';
 	firstHitCoord = ' ';
-	isCurrentDamagedShipSunk = null;
 	damagedShip = null;
 	lastHit = ' ';
 
@@ -216,9 +215,8 @@ export class PlayerBoard extends Gameboard {
 				this.damagedShip = ship;
 
 				break;
-			} else if (ship.isSunk()) {
+			} else if (coords.includes(this.firstHitCoord) && ship.isSunk()) {
 				this.damagedShip = null;
-				console.log('обнулить первое попадание');
 				this.firstHitCoord = ' ';
 			}
 		}

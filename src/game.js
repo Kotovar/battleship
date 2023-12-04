@@ -92,19 +92,14 @@ export class Game {
 			this.playerBoard.isPreviousAttackHit = true;
 			if (this.playerBoard.damagedShip === null) {
 				this.playerBoard.firstHitCoord = shot;
-				console.log(`Подбил ${shot}`);
 			}
 
 			this.playerBoard.lastHit = shot;
 			this.playerBoard.getDamagedShip();
 
-			console.log(`Первое попадание = ${this.playerBoard.firstHitCoord}`);
 			return false;
 		}
 
-		console.log(
-			`Сейчас промах, а первое попадание = ${this.playerBoard.firstHitCoord}`,
-		);
 		this.playerBoard.isPreviousAttackHit = false;
 		return true;
 	}
