@@ -24,7 +24,6 @@ export function playerComputer(board) {
 		y = Number(y);
 
 		const conditions = [
-			// проверка клетки слева
 			(x, y) => {
 				if (
 					y > 0 &&
@@ -34,7 +33,6 @@ export function playerComputer(board) {
 					return `${x}${y - 1}`;
 				}
 			},
-			// проверка клетки выше
 			(x, y) => {
 				if (
 					x > 0 &&
@@ -44,7 +42,6 @@ export function playerComputer(board) {
 					return `${x - 1}${y}`;
 				}
 			},
-			// проверка клетки правее
 			(x, y) => {
 				if (
 					y < size &&
@@ -54,7 +51,6 @@ export function playerComputer(board) {
 					return `${x}${y + 1}`;
 				}
 			},
-			// проверка клетки ниже
 			(x, y) => {
 				if (
 					x < size &&
@@ -96,6 +92,14 @@ export function playerComputer(board) {
 			const random = Math.floor(Math.random() * board.possibleShots.length);
 			shot = board.possibleShots[random];
 		}
+
+		// if (shot === undefined && board.damagedShip !== null) {
+		// 	const [xS, yS] = board.firstHitCoord;
+		// 	conditions(xS, yS);
+		// } else if (shot === undefined) {
+		// 	const random = Math.floor(Math.random() * board.possibleShots.length);
+		// 	shot = board.possibleShots[random];
+		// }
 
 		const index = board.possibleShots.indexOf(shot);
 		board.possibleShots.splice(index, 1);

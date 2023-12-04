@@ -90,12 +90,21 @@ export class Game {
 		const [x, y] = shot;
 		if (this.playerBoard.map[x][y] === '☒') {
 			this.playerBoard.isPreviousAttackHit = true;
-			this.playerBoard.getDamagedShip();
-			this.playerBoard.lastHit = shot;
+			if (this.playerBoard.damagedShip === null) {
+				this.playerBoard.firstHitCoord = shot;
+				console.log(`Подбил ${shot}`);
+			}
 
+			this.playerBoard.lastHit = shot;
+			this.playerBoard.getDamagedShip();
+
+			console.log(`Первое попадание = ${this.playerBoard.firstHitCoord}`);
 			return false;
 		}
 
+		console.log(
+			`Сейчас промах, а первое попадание = ${this.playerBoard.firstHitCoord}`,
+		);
 		this.playerBoard.isPreviousAttackHit = false;
 		return true;
 	}

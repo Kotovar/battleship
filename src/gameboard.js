@@ -200,6 +200,7 @@ export class PlayerBoard extends Gameboard {
 	possibleShots = [];
 	isPreviousAttackHit = false;
 	previousCoord = ' ';
+	firstHitCoord = ' ';
 	isCurrentDamagedShipSunk = null;
 	damagedShip = null;
 	lastHit = ' ';
@@ -213,9 +214,12 @@ export class PlayerBoard extends Gameboard {
 		for (const [ship, coords] of this.listOfShips) {
 			if (coords.includes(this.previousCoord) && !ship.isSunk()) {
 				this.damagedShip = ship;
+
 				break;
-			} else {
+			} else if (ship.isSunk()) {
 				this.damagedShip = null;
+				console.log('обнулить первое попадание');
+				this.firstHitCoord = ' ';
 			}
 		}
 	}
