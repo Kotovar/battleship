@@ -2,6 +2,8 @@ import {ComputerBoard, PlayerBoard} from './gameboard';
 import {playerHuman, playerComputer} from './player';
 import {fillPlayerBoardsDOM, playerShotDOM} from './generateDOM';
 
+const DELAY = 1000;
+
 export class Game {
 	constructor(player1, player2) {
 		this.playerBoard = new PlayerBoard(player1);
@@ -21,6 +23,31 @@ export class Game {
 		winerLabel.textContent = '';
 	}
 
+	// async start() {
+	// 	let turn = 'player';
+	// 	let winner = null;
+	// 	while (!winner) {
+	// 		if (turn === 'player') {
+	// 			// eslint-disable-next-line no-await-in-loop
+	// 			const hit = await this.playerShot();
+	// 			if (hit) {
+	// 				turn = 'computer';
+	// 			}
+	// 		} else if (turn === 'computer') {
+	// 			const hit = this.computerShot();
+
+	// 			if (hit) {
+	// 				turn = 'player';
+	// 			}
+	// 		}
+
+	// 		winner = this.checkWinner();
+	// 	}
+
+	// 	const winerLabel = document.getElementsByClassName('winnerLabel')[0];
+	// 	winerLabel.textContent = `${winner} won the game!`;
+	// }
+
 	async start() {
 		let turn = 'player';
 		let winner = null;
@@ -32,6 +59,10 @@ export class Game {
 					turn = 'computer';
 				}
 			} else if (turn === 'computer') {
+				// Задержка в 1 секунду (1000 миллисекунд)
+				await new Promise((resolve) => {
+					setTimeout(resolve, DELAY);
+				});
 				const hit = this.computerShot();
 
 				if (hit) {
