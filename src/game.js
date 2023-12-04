@@ -54,7 +54,6 @@ export class Game {
 
 	fillBoardPlayer() {
 		this.#randomGeneration(this.playerBoard);
-		// this.manualGeneration(this.playerBoard);
 	}
 
 	fillBoardComputer() {
