@@ -126,6 +126,8 @@ export function playerComputer(board) {
 function startListeningPlayerTurn() {
 	const field = document.getElementsByClassName('board')[1];
 	field.addEventListener('click', handler);
+	field.addEventListener('mouseover', backlight);
+	field.addEventListener('mouseout', reset);
 }
 
 function handler(e) {
@@ -133,5 +135,19 @@ function handler(e) {
 	if (e.target.classList.contains('cell') && e.target.textContent === '') {
 		shotPlayer = e.target.classList[1].slice(5);
 		field.removeEventListener('click', handler);
+	}
+}
+
+function backlight(e) {
+	if (e.target.classList.contains('cell')) {
+		e.target.style.transform = 'scale(1.05)';
+		e.target.style.background = 'rgb(245, 245, 245)';
+	}
+}
+
+function reset(e) {
+	if (e.target.classList.contains('cell')) {
+		e.target.style.transform = 'none';
+		e.target.style.background = 'white';
 	}
 }
