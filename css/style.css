@@ -6,16 +6,28 @@
   user-select: none;
 }
 
+:root {
+  --color-primary: #f5f5dc;
+  --color-border: blue;
+  --color-label: #4d4d4d;
+  --color-button: #4d4d4d91;
+  --color-winner: #115f13;
+  --font: "Courier New", Courier, monospace;
+  --font-size-large: 3rem;
+  --font-size-main: 2rem;
+  --font-size-small: 1rem;
+}
+
 body {
-  background: #f5f5dc;
+  background: var(--color-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 body h1 {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 3rem;
-  color: blue;
+  font-family: var(--font);
+  font-size: var(--font-size-large);
+  color: var(--color-border);
   margin: 1rem 0;
 }
 
@@ -26,9 +38,9 @@ body h1 {
   gap: 5rem;
 }
 .labelContainer .label {
-  font-size: 2rem;
-  font-family: "Courier New", Courier, monospace;
-  color: #4d4d4d;
+  font-size: var(--font-size-main);
+  font-family: var(--font);
+  color: var(--color-label);
   font-weight: bold;
   width: 25vh;
   text-align: center;
@@ -41,15 +53,15 @@ body h1 {
   gap: 1rem;
 }
 .divButton .button {
-  font-size: 2rem;
+  font-size: var(--font-size-main);
   border-radius: 10px;
-  background-color: rgba(77, 77, 77, 0.568627451);
+  background-color: var(--color-button);
 }
 .divButton .winnerLabel {
-  color: #115f13;
-  font-size: 2rem;
-  height: 2rem;
-  margin-bottom: 2rem;
+  color: var(--color-winner);
+  font-size: var(--font-size-main);
+  height: var(--font-size-main);
+  margin-bottom: var(--font-size-main);
 }
 
 .container {
@@ -76,10 +88,10 @@ body h1 {
   grid-template-rows: repeat(10, 1fr);
   grid-auto-flow: dense;
   background-color: white;
-  border: 2px solid blue;
+  border: 2px solid var(--color-border);
 }
 .board div {
-  border: 2px solid blue;
+  border: 2px solid var(--color-border);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,8 +106,8 @@ body h1 {
 .numberLine {
   display: flex;
   font-weight: 900;
-  font-size: 2rem;
-  color: blue;
+  font-size: var(--font-size-main);
+  color: var(--color-border);
 }
 
 .letterLine {
@@ -124,6 +136,11 @@ body h1 {
   }
 }
 @media (max-width: 810px) {
+  :root {
+    --font-size-large: 1.5rem;
+    --font-size-main: 1rem;
+    --font-size-small: 0.5rem;
+  }
   h1 {
     text-align: center;
   }
@@ -133,5 +150,10 @@ body h1 {
   }
   .board div {
     font-size: 7vw;
+  }
+}
+@media (max-width: 500px) {
+  .container {
+    width: 80vw;
   }
 }/*# sourceMappingURL=style.css.map */
