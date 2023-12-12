@@ -9,7 +9,7 @@ export function generateShell() {
 	const labelContainer = createElement('div', '', 'labelContainer', body);
 	const divButton = createElement('div', '', 'divButton', body);
 	createElement('button', 'Start Game', 'button', divButton);
-	createElement('h2', '', 'winnerLabel', divButton);
+	createElement('h2', 'Player1 win', 'winnerLabel', divButton);
 	createElement('p', 'You', 'label', labelContainer);
 	createElement('p', 'Computer', 'label', labelContainer);
 
