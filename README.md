@@ -15,6 +15,8 @@ To use battleship_Odin, you need to have `Node.js` and `npm` installed on your s
 - open the dist/index.html file in your browser
 ```
 
+[Live preview](https://kotovar.github.io/battleship_Odin/)
+
 ## How it works
 
 To create this application I used the following technologies:
@@ -46,4 +48,4 @@ Also, if the computer hits a ship and wounds it, it will try to finish it off in
 
 ## Credits
 
-This project was inspired by [[The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-battleship)], which is an open source curriculum for learning web development.
+This project was inspired by [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-battleship), which is an open source curriculum for learning web development.
