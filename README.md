@@ -2,7 +2,8 @@
 
 implementation of the game Sea Battle in javaScript
 
-![1](https://github.com/Kotovar/battleship_Odin/assets/77914431/cada35c0-d18b-45a0-bfea-eb78ebed805e)
+![1](https://github.com/Kotovar/battleship_Odin/assets/77914431/630d7a79-2ea7-4851-b166-7c50c76fc512)
+
 
 ## How to use
 
