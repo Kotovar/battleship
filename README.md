@@ -1,4 +1,4 @@
-# battleship_Odin
+# battleship
 
 implementation of the game Sea Battle in javaScript
 
@@ -7,12 +7,12 @@ implementation of the game Sea Battle in javaScript
 
 ## How to use
 
-To use battleship_Odin, you need to have `Node.js` and `npm` installed on your system. You can then clone this repository and run the following commands:
+To use battleship, you need to have `Node.js` and `npm` installed on your system. You can then clone this repository and run the following commands:
 
 ```bash
 - npm install -g webpack # to install webpack globally
 - npm link webpack-cli # to link webpack-cli in the project directory
-- webpack # to bundle the project files
+- webpack # to bundle the project filesbattleship
 - open the dist/index.html file in your browser
 ```
 
