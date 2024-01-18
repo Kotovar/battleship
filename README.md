@@ -16,7 +16,7 @@ To use battleship, you need to have `Node.js` and `npm` installed on your system
 - open the dist/index.html file in your browser
 ```
 
-[Live preview](https://kotovar.github.io/battleship_Odin/)
+[Live preview](https://kotovar.github.io/battleship/)
 
 ## How it works
 
