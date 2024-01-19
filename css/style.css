@@ -155,6 +155,28 @@ body h1 {
 @media (max-width: 500px) {
   .container {
     width: 80vw;
-    max-height: 80dvh;
+    height: -moz-max-content;
+    height: max-content;
+  }
+  .container .leftContainer,
+  .container .rightContainer {
+    gap: 0.5rem;
+  }
+  .main {
+    max-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .labelContainer,
+  .divButton,
+  body h1 {
+    height: 5dvh;
+  }
+  .button {
+    width: 30dvw;
+  }
+  body h1 {
+    margin: 0;
   }
 }/*# sourceMappingURL=style.css.map */
