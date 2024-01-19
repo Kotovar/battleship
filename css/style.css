@@ -155,5 +155,6 @@ body h1 {
 @media (max-width: 500px) {
   .container {
     width: 80vw;
+    max-height: 80dvh;
   }
 }/*# sourceMappingURL=style.css.map */
