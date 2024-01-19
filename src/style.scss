@@ -170,6 +170,32 @@ body {
 @media (max-width: 500px) {
 	.container {
 		width: 80vw;
-		max-height: 80dvh;
+		height: max-content;
+
+		.leftContainer,
+		.rightContainer {
+			gap: 0.5rem;
+		}
+	}
+
+	.main {
+		max-height: 100dvh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.labelContainer,
+	.divButton,
+	body h1 {
+		height: 5dvh;
+	}
+
+	.button {
+		width: 30dvw;
+	}
+
+	body h1 {
+		margin: 0;
 	}
 }

@@ -4,16 +4,18 @@ const COLUMNS = 10;
 export function generateShell() {
 	const body = document.getElementsByTagName('body')[0];
 
-	createElement('h1', 'Battleship game', '', body);
+	const main = createElement('div', '', 'main', body);
 
-	const labelContainer = createElement('div', '', 'labelContainer', body);
-	const divButton = createElement('div', '', 'divButton', body);
+	createElement('h1', 'Battleship game', '', main);
+
+	const labelContainer = createElement('div', '', 'labelContainer', main);
+	const divButton = createElement('div', '', 'divButton', main);
 	createElement('button', 'Start Game', 'button', divButton);
 	createElement('h2', '', 'winnerLabel', divButton);
 	createElement('p', 'You', 'label', labelContainer);
 	createElement('p', 'Computer', 'label', labelContainer);
 
-	const container = createElement('div', '', 'container', body);
+	const container = createElement('div', '', 'container', main);
 	const leftContainer = createElement('div', '', 'leftContainer', container);
 	const rightContainer = createElement('div', '', 'rightContainer', container);
 
