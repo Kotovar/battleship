@@ -147,24 +147,16 @@ body h1 {
 @media (max-width: 810px) {
   :root {
     --font-size-large: 1.5rem;
-    --font-size-main: 1rem;
+    --font-size-main: 1.2rem;
     --font-size-small: 0.5rem;
   }
-  h1 {
-    text-align: center;
-  }
   .container {
+    width: 60dvw;
     flex-direction: column-reverse;
     align-items: center;
   }
   .board div {
-    font-size: 7vw;
-  }
-  .main {
-    max-height: 100%;
-  }
-  .labelContainer {
-    margin: 0 auto;
+    font-size: 3.5vw;
   }
   .leftContainer,
   .rightContainer {
@@ -173,13 +165,13 @@ body h1 {
 }
 @media (max-width: 500px) {
   .container {
-    width: 80vw;
     height: -moz-max-content;
     height: max-content;
   }
   .container .leftContainer,
   .container .rightContainer {
     gap: 0.5rem;
+    width: 75dvw;
   }
   .main {
     max-height: 100dvh;
@@ -197,5 +189,8 @@ body h1 {
   }
   body h1 {
     margin: 0;
+  }
+  .board div {
+    font-size: 5vw;
   }
 }/*# sourceMappingURL=style.css.map */
